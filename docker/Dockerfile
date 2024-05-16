@@ -39,6 +39,7 @@ ENV FORCE_CUDA="1"
 ARG TORCH_CUDA_ARCH_LIST="Kepler;Kepler+Tesla;Maxwell;Maxwell+Tegra;Pascal;Volta;Turing"
 ENV TORCH_CUDA_ARCH_LIST="${TORCH_CUDA_ARCH_LIST}"
 
+# should run below inside running catainer
 # RUN pip3 install --user -e detectron2_repo
 # RUN pip3 install --user timm
 
