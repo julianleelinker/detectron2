@@ -1,0 +1,2 @@
+export DETECTRON2_DATASETS=/home/appuser/detectron2_repo/datasets/
+set PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:128
