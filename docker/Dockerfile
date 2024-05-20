@@ -39,8 +39,20 @@ ENV FORCE_CUDA="1"
 ARG TORCH_CUDA_ARCH_LIST="Kepler;Kepler+Tesla;Maxwell;Maxwell+Tegra;Pascal;Volta;Turing"
 ENV TORCH_CUDA_ARCH_LIST="${TORCH_CUDA_ARCH_LIST}"
 
+# install zsh for easier development
+RUN sudo apt update
+RUN sudo apt install -y zsh
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf \
+	&& ~/.fzf/install
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.2/zsh-in-docker.sh)" -- \
+	-p git \
+	-p fzf \
+	-p https://github.com/zsh-users/zsh-autosuggestions \
+	-p https://github.com/zsh-users/zsh-syntax-highlighting \
+	-p https://github.com/zsh-users/zsh-completions
+
 # should run below inside running catainer
-# RUN pip3 install --user -e detectron2_repo
+# RUN pip3 install --user -e detectron2  # detectron2 is mounted
 # RUN pip3 install --user timm
 
 # Set a fixed model cache directory.

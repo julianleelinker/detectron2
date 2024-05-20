@@ -19,7 +19,7 @@ train.init_checkpoint = (
     "detectron2://ImageNetPretrained/MAE/mae_pretrain_vit_base.pth?matching_heuristics=True"
     # "/home/appuser/detectron2_repo/datasets/coco/dinov2_vitb14_reg4_pretrain.pth"
 )
-# train.output_dir = './test_output'
+train.output_dir = '/home/appuser/datasets/ssl/train_output/test'
 
 
 # Schedule

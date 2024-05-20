@@ -1,2 +1,10 @@
-export DETECTRON2_DATASETS=/home/appuser/detectron2_repo/datasets/
+docker run --gpus all -it \
+  --shm-size=8gb --env="DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+  -v /mnt/data-home/julian/ssl:/home/appuser/datasets/ssl -v /home/julian/work/detectron2:/home/appuser/detectron2 --name=detectron2 detectron2:ssl
+pip3 install --user -e detectron2
+pip3 install --user timm
+pip3 install --user shapely
+
+export DETECTRON2_DATASETS=/home/appuser/datasets/ssl
 set PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:128
+../../tools/lazyconfig_train_net.py --config-file configs/COCO/mask_rcnn_vitdet_b_100ep_ssl.py
