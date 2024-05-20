@@ -1,0 +1,589 @@
+GeneralizedRCNN(
+  (backbone): SimpleFeaturePyramid(
+    (simfp_2): Sequential(
+      (0): ConvTranspose2d(768, 384, kernel_size=(2, 2), stride=(2, 2))
+      (1): LayerNorm()
+      (2): GELU()
+      (3): ConvTranspose2d(384, 192, kernel_size=(2, 2), stride=(2, 2))
+      (4): Conv2d(
+        192, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (norm): LayerNorm()
+      )
+      (5): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (norm): LayerNorm()
+      )
+    )
+    (simfp_3): Sequential(
+      (0): ConvTranspose2d(768, 384, kernel_size=(2, 2), stride=(2, 2))
+      (1): Conv2d(
+        384, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (norm): LayerNorm()
+      )
+      (2): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (norm): LayerNorm()
+      )
+    )
+    (simfp_4): Sequential(
+      (0): Conv2d(
+        768, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (norm): LayerNorm()
+      )
+      (1): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (norm): LayerNorm()
+      )
+    )
+    (simfp_5): Sequential(
+      (0): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      (1): Conv2d(
+        768, 256, kernel_size=(1, 1), stride=(1, 1), bias=False
+        (norm): LayerNorm()
+      )
+      (2): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (norm): LayerNorm()
+      )
+    )
+    (net): ViT(
+      (patch_embed): PatchEmbed(
+        (proj): Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16))
+      )
+      (blocks): ModuleList(
+        (0): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): Identity()
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (norm): Identity()
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (1): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.009)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (norm): Identity()
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (2): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.018)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (norm): Identity()
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (3): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.027)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (norm): Identity()
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (4): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.036)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (norm): Identity()
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (5): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.045)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (norm): Identity()
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (6): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.055)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (norm): Identity()
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (7): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.064)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (norm): Identity()
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (8): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.073)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (norm): Identity()
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (9): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.082)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (norm): Identity()
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (10): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.091)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (norm): Identity()
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+        (11): Block(
+          (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (attn): Attention(
+            (qkv): Linear(in_features=768, out_features=2304, bias=True)
+            (proj): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (drop_path): DropPath(drop_prob=0.100)
+          (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+          (mlp): Mlp(
+            (fc1): Linear(in_features=768, out_features=3072, bias=True)
+            (act): GELU()
+            (drop1): Dropout(p=0.0, inplace=False)
+            (norm): Identity()
+            (fc2): Linear(in_features=3072, out_features=768, bias=True)
+            (drop2): Dropout(p=0.0, inplace=False)
+          )
+        )
+      )
+    )
+    (top_block): LastLevelMaxPool()
+  )
+  (proposal_generator): RPN(
+    (rpn_head): StandardRPNHead(
+      (conv): Sequential(
+        (conv0): Conv2d(
+          256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+          (activation): ReLU()
+        )
+        (conv1): Conv2d(
+          256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)
+          (activation): ReLU()
+        )
+      )
+      (objectness_logits): Conv2d(256, 3, kernel_size=(1, 1), stride=(1, 1))
+      (anchor_deltas): Conv2d(256, 12, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (anchor_generator): DefaultAnchorGenerator(
+      (cell_anchors): BufferList()
+    )
+  )
+  (roi_heads): StandardROIHeads(
+    (box_pooler): ROIPooler(
+      (level_poolers): ModuleList(
+        (0): ROIAlign(output_size=(7, 7), spatial_scale=0.25, sampling_ratio=0, aligned=True)
+        (1): ROIAlign(output_size=(7, 7), spatial_scale=0.125, sampling_ratio=0, aligned=True)
+        (2): ROIAlign(output_size=(7, 7), spatial_scale=0.0625, sampling_ratio=0, aligned=True)
+        (3): ROIAlign(output_size=(7, 7), spatial_scale=0.03125, sampling_ratio=0, aligned=True)
+      )
+    )
+    (box_head): FastRCNNConvFCHead(
+      (conv1): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (norm): LayerNorm()
+        (activation): ReLU()
+      )
+      (conv2): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (norm): LayerNorm()
+        (activation): ReLU()
+      )
+      (conv3): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (norm): LayerNorm()
+        (activation): ReLU()
+      )
+      (conv4): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (norm): LayerNorm()
+        (activation): ReLU()
+      )
+      (flatten): Flatten(start_dim=1, end_dim=-1)
+      (fc1): Linear(in_features=12544, out_features=1024, bias=True)
+      (fc_relu1): ReLU()
+    )
+    (box_predictor): FastRCNNOutputLayers(
+      (cls_score): Linear(in_features=1024, out_features=81, bias=True)
+      (bbox_pred): Linear(in_features=1024, out_features=320, bias=True)
+    )
+    (mask_pooler): ROIPooler(
+      (level_poolers): ModuleList(
+        (0): ROIAlign(output_size=(14, 14), spatial_scale=0.25, sampling_ratio=0, aligned=True)
+        (1): ROIAlign(output_size=(14, 14), spatial_scale=0.125, sampling_ratio=0, aligned=True)
+        (2): ROIAlign(output_size=(14, 14), spatial_scale=0.0625, sampling_ratio=0, aligned=True)
+        (3): ROIAlign(output_size=(14, 14), spatial_scale=0.03125, sampling_ratio=0, aligned=True)
+      )
+    )
+    (mask_head): MaskRCNNConvUpsampleHead(
+      (mask_fcn1): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (norm): LayerNorm()
+        (activation): ReLU()
+      )
+      (mask_fcn2): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (norm): LayerNorm()
+        (activation): ReLU()
+      )
+      (mask_fcn3): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (norm): LayerNorm()
+        (activation): ReLU()
+      )
+      (mask_fcn4): Conv2d(
+        256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False
+        (norm): LayerNorm()
+        (activation): ReLU()
+      )
+      (deconv): ConvTranspose2d(256, 256, kernel_size=(2, 2), stride=(2, 2))
+      (deconv_relu): ReLU()
+      (predictor): Conv2d(256, 80, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+
+WARNING [05/17 04:05:39 fvcore.common.checkpoint]: Some model parameters or buffers are not found in the checkpoint:
+backbone.net.blocks.0.attn.proj.{bias, weight}
+backbone.net.blocks.0.attn.qkv.{bias, weight}
+backbone.net.blocks.0.attn.{rel_pos_h, rel_pos_w}
+backbone.net.blocks.0.mlp.fc1.{bias, weight}
+backbone.net.blocks.0.mlp.fc2.{bias, weight}
+backbone.net.blocks.0.norm1.{bias, weight}
+backbone.net.blocks.0.norm2.{bias, weight}
+backbone.net.blocks.1.attn.proj.{bias, weight}
+backbone.net.blocks.1.attn.qkv.{bias, weight}
+backbone.net.blocks.1.attn.{rel_pos_h, rel_pos_w}
+backbone.net.blocks.1.mlp.fc1.{bias, weight}
+backbone.net.blocks.1.mlp.fc2.{bias, weight}
+backbone.net.blocks.1.norm1.{bias, weight}
+backbone.net.blocks.1.norm2.{bias, weight}
+backbone.net.blocks.10.attn.proj.{bias, weight}
+backbone.net.blocks.10.attn.qkv.{bias, weight}
+backbone.net.blocks.10.attn.{rel_pos_h, rel_pos_w}
+backbone.net.blocks.10.mlp.fc1.{bias, weight}
+backbone.net.blocks.10.mlp.fc2.{bias, weight}
+backbone.net.blocks.10.norm1.{bias, weight}
+backbone.net.blocks.10.norm2.{bias, weight}
+backbone.net.blocks.11.attn.proj.{bias, weight}
+backbone.net.blocks.11.attn.qkv.{bias, weight}
+backbone.net.blocks.11.attn.{rel_pos_h, rel_pos_w}
+backbone.net.blocks.11.mlp.fc1.{bias, weight}
+backbone.net.blocks.11.mlp.fc2.{bias, weight}
+backbone.net.blocks.11.norm1.{bias, weight}
+backbone.net.blocks.11.norm2.{bias, weight}
+backbone.net.blocks.2.attn.proj.{bias, weight}
+backbone.net.blocks.2.attn.qkv.{bias, weight}
+backbone.net.blocks.2.attn.{rel_pos_h, rel_pos_w}
+backbone.net.blocks.2.mlp.fc1.{bias, weight}
+backbone.net.blocks.2.mlp.fc2.{bias, weight}
+backbone.net.blocks.2.norm1.{bias, weight}
+backbone.net.blocks.2.norm2.{bias, weight}
+backbone.net.blocks.3.attn.proj.{bias, weight}
+backbone.net.blocks.3.attn.qkv.{bias, weight}
+backbone.net.blocks.3.attn.{rel_pos_h, rel_pos_w}
+backbone.net.blocks.3.mlp.fc1.{bias, weight}
+backbone.net.blocks.3.mlp.fc2.{bias, weight}
+backbone.net.blocks.3.norm1.{bias, weight}
+backbone.net.blocks.3.norm2.{bias, weight}
+backbone.net.blocks.4.attn.proj.{bias, weight}
+backbone.net.blocks.4.attn.qkv.{bias, weight}
+backbone.net.blocks.4.attn.{rel_pos_h, rel_pos_w}
+backbone.net.blocks.4.mlp.fc1.{bias, weight}
+backbone.net.blocks.4.mlp.fc2.{bias, weight}
+backbone.net.blocks.4.norm1.{bias, weight}
+backbone.net.blocks.4.norm2.{bias, weight}
+backbone.net.blocks.5.attn.proj.{bias, weight}
+backbone.net.blocks.5.attn.qkv.{bias, weight}
+backbone.net.blocks.5.attn.{rel_pos_h, rel_pos_w}
+backbone.net.blocks.5.mlp.fc1.{bias, weight}
+backbone.net.blocks.5.mlp.fc2.{bias, weight}
+backbone.net.blocks.5.norm1.{bias, weight}
+backbone.net.blocks.5.norm2.{bias, weight}
+backbone.net.blocks.6.attn.proj.{bias, weight}
+backbone.net.blocks.6.attn.qkv.{bias, weight}
+backbone.net.blocks.6.attn.{rel_pos_h, rel_pos_w}
+backbone.net.blocks.6.mlp.fc1.{bias, weight}
+backbone.net.blocks.6.mlp.fc2.{bias, weight}
+backbone.net.blocks.6.norm1.{bias, weight}
+backbone.net.blocks.6.norm2.{bias, weight}
+backbone.net.blocks.7.attn.proj.{bias, weight}
+backbone.net.blocks.7.attn.qkv.{bias, weight}
+backbone.net.blocks.7.attn.{rel_pos_h, rel_pos_w}
+backbone.net.blocks.7.mlp.fc1.{bias, weight}
+backbone.net.blocks.7.mlp.fc2.{bias, weight}
+backbone.net.blocks.7.norm1.{bias, weight}
+backbone.net.blocks.7.norm2.{bias, weight}
+backbone.net.blocks.8.attn.proj.{bias, weight}
+backbone.net.blocks.8.attn.qkv.{bias, weight}
+backbone.net.blocks.8.attn.{rel_pos_h, rel_pos_w}
+backbone.net.blocks.8.mlp.fc1.{bias, weight}
+backbone.net.blocks.8.mlp.fc2.{bias, weight}
+backbone.net.blocks.8.norm1.{bias, weight}
+backbone.net.blocks.8.norm2.{bias, weight}
+backbone.net.blocks.9.attn.proj.{bias, weight}
+backbone.net.blocks.9.attn.qkv.{bias, weight}
+backbone.net.blocks.9.attn.{rel_pos_h, rel_pos_w}
+backbone.net.blocks.9.mlp.fc1.{bias, weight}
+backbone.net.blocks.9.mlp.fc2.{bias, weight}
+backbone.net.blocks.9.norm1.{bias, weight}
+backbone.net.blocks.9.norm2.{bias, weight}
+backbone.net.patch_embed.proj.{bias, weight}
+backbone.net.pos_embed
+backbone.simfp_2.0.{bias, weight}
+backbone.simfp_2.1.{bias, weight}
+backbone.simfp_2.3.{bias, weight}
+backbone.simfp_2.4.norm.{bias, weight}
+backbone.simfp_2.4.weight
+backbone.simfp_2.5.norm.{bias, weight}
+backbone.simfp_2.5.weight
+backbone.simfp_3.0.{bias, weight}
+backbone.simfp_3.1.norm.{bias, weight}
+backbone.simfp_3.1.weight
+backbone.simfp_3.2.norm.{bias, weight}
+backbone.simfp_3.2.weight
+backbone.simfp_4.0.norm.{bias, weight}
+backbone.simfp_4.0.weight
+backbone.simfp_4.1.norm.{bias, weight}
+backbone.simfp_4.1.weight
+backbone.simfp_5.1.norm.{bias, weight}
+backbone.simfp_5.1.weight
+backbone.simfp_5.2.norm.{bias, weight}
+backbone.simfp_5.2.weight
+proposal_generator.rpn_head.anchor_deltas.{bias, weight}
+proposal_generator.rpn_head.conv.conv0.{bias, weight}
+proposal_generator.rpn_head.conv.conv1.{bias, weight}
+proposal_generator.rpn_head.objectness_logits.{bias, weight}
+roi_heads.box_head.conv1.norm.{bias, weight}
+roi_heads.box_head.conv1.weight
+roi_heads.box_head.conv2.norm.{bias, weight}
+roi_heads.box_head.conv2.weight
+roi_heads.box_head.conv3.norm.{bias, weight}
+roi_heads.box_head.conv3.weight
+roi_heads.box_head.conv4.norm.{bias, weight}
+roi_heads.box_head.conv4.weight
+roi_heads.box_head.fc1.{bias, weight}
+roi_heads.box_predictor.bbox_pred.{bias, weight}
+roi_heads.box_predictor.cls_score.{bias, weight}
+roi_heads.mask_head.deconv.{bias, weight}
+roi_heads.mask_head.mask_fcn1.norm.{bias, weight}
+roi_heads.mask_head.mask_fcn1.weight
+roi_heads.mask_head.mask_fcn2.norm.{bias, weight}
+roi_heads.mask_head.mask_fcn2.weight
+roi_heads.mask_head.mask_fcn3.norm.{bias, weight}
+roi_heads.mask_head.mask_fcn3.weight
+roi_heads.mask_head.mask_fcn4.norm.{bias, weight}
+roi_heads.mask_head.mask_fcn4.weight
+roi_heads.mask_head.predictor.{bias, weight}
+WARNING [05/17 04:05:39 fvcore.common.checkpoint]: The checkpoint state_dict contains keys that are not used by the model:
+  cls_token
+  register_tokens
+  pos_embed
+  mask_token
+  patch_embed.proj.{bias, weight}
+  blocks.0.norm1.{bias, weight}
+  blocks.0.attn.qkv.{bias, weight}
+  blocks.0.attn.proj.{bias, weight}
+  blocks.0.ls1.gamma
+  blocks.0.norm2.{bias, weight}
+  blocks.0.mlp.fc1.{bias, weight}
+  blocks.0.mlp.fc2.{bias, weight}
+  blocks.0.ls2.gamma
+  blocks.1.norm1.{bias, weight}
+  blocks.1.attn.qkv.{bias, weight}
+  blocks.1.attn.proj.{bias, weight}
+  blocks.1.ls1.gamma
+  blocks.1.norm2.{bias, weight}
+  blocks.1.mlp.fc1.{bias, weight}
+  blocks.1.mlp.fc2.{bias, weight}
+  blocks.1.ls2.gamma
+  blocks.2.norm1.{bias, weight}
+  blocks.2.attn.qkv.{bias, weight}
+  blocks.2.attn.proj.{bias, weight}
+  blocks.2.ls1.gamma
+  blocks.2.norm2.{bias, weight}
+  blocks.2.mlp.fc1.{bias, weight}
+  blocks.2.mlp.fc2.{bias, weight}
+  blocks.2.ls2.gamma
+  blocks.3.norm1.{bias, weight}
+  blocks.3.attn.qkv.{bias, weight}
+  blocks.3.attn.proj.{bias, weight}
+  blocks.3.ls1.gamma
+  blocks.3.norm2.{bias, weight}
+  blocks.3.mlp.fc1.{bias, weight}
+  blocks.3.mlp.fc2.{bias, weight}
+  blocks.3.ls2.gamma
+  blocks.4.norm1.{bias, weight}
+  blocks.4.attn.qkv.{bias, weight}
+  blocks.4.attn.proj.{bias, weight}
+  blocks.4.ls1.gamma
+  blocks.4.norm2.{bias, weight}
+  blocks.4.mlp.fc1.{bias, weight}
+  blocks.4.mlp.fc2.{bias, weight}
+  blocks.4.ls2.gamma
+  blocks.5.norm1.{bias, weight}
+  blocks.5.attn.qkv.{bias, weight}
+  blocks.5.attn.proj.{bias, weight}
+  blocks.5.ls1.gamma
+  blocks.5.norm2.{bias, weight}
+  blocks.5.mlp.fc1.{bias, weight}
+  blocks.5.mlp.fc2.{bias, weight}
+  blocks.5.ls2.gamma
+  blocks.6.norm1.{bias, weight}
+  blocks.6.attn.qkv.{bias, weight}
+  blocks.6.attn.proj.{bias, weight}
+  blocks.6.ls1.gamma
+  blocks.6.norm2.{bias, weight}
+  blocks.6.mlp.fc1.{bias, weight}
+  blocks.6.mlp.fc2.{bias, weight}
+  blocks.6.ls2.gamma
+  blocks.7.norm1.{bias, weight}
+  blocks.7.attn.qkv.{bias, weight}
+  blocks.7.attn.proj.{bias, weight}
+  blocks.7.ls1.gamma
+  blocks.7.norm2.{bias, weight}
+  blocks.7.mlp.fc1.{bias, weight}
+  blocks.7.mlp.fc2.{bias, weight}
+  blocks.7.ls2.gamma
+  blocks.8.norm1.{bias, weight}
+  blocks.8.attn.qkv.{bias, weight}
+  blocks.8.attn.proj.{bias, weight}
+  blocks.8.ls1.gamma
+  blocks.8.norm2.{bias, weight}
+  blocks.8.mlp.fc1.{bias, weight}
+  blocks.8.mlp.fc2.{bias, weight}
+  blocks.8.ls2.gamma
+  blocks.9.norm1.{bias, weight}
+  blocks.9.attn.qkv.{bias, weight}
+  blocks.9.attn.proj.{bias, weight}
+  blocks.9.ls1.gamma
+  blocks.9.norm2.{bias, weight}
+  blocks.9.mlp.fc1.{bias, weight}
+  blocks.9.mlp.fc2.{bias, weight}
+  blocks.9.ls2.gamma
+  blocks.10.norm1.{bias, weight}
+  blocks.10.attn.qkv.{bias, weight}
+  blocks.10.attn.proj.{bias, weight}
+  blocks.10.ls1.gamma
+  blocks.10.norm2.{bias, weight}
+  blocks.10.mlp.fc1.{bias, weight}
+  blocks.10.mlp.fc2.{bias, weight}
+  blocks.10.ls2.gamma
+  blocks.11.norm1.{bias, weight}
+  blocks.11.attn.qkv.{bias, weight}
+  blocks.11.attn.proj.{bias, weight}
+  blocks.11.ls1.gamma
+  blocks.11.norm2.{bias, weight}
+  blocks.11.mlp.fc1.{bias, weight}
+  blocks.11.mlp.fc2.{bias, weight}
+  blocks.11.ls2.gamma
+  norm.{bias, weight}
