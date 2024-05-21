@@ -28,10 +28,14 @@ from detectron2.engine import (
 from detectron2.engine.defaults import create_ddp_model
 from detectron2.evaluation import inference_on_dataset, print_csv_format
 from detectron2.utils import comm
-# from detectron2.data.datasets import register_coco_instances
+import torch
 
+from detectron2.utils import custom
+
+# from detectron2.data.datasets import register_coco_instances
 # register_coco_instances("tiip_coco_train", {}, "instance_train2017.json", "/home/appuser/datasets/tiip/images/kaohsiung5gsmartcitydemo")
 # register_coco_instances("tiip_coco_val", {}, "instance_val2017.json",  "/home/appuser/datasets/tiip/images/kaohsiung5gsmartcitydemo")
+
 
 logger = logging.getLogger("detectron2")
 
@@ -67,9 +71,21 @@ def do_train(args, cfg):
                 ddp (dict)
     """
     model = instantiate(cfg.model)
+    model.to(cfg.train.device)
+
+
+    output_list = custom.register_top_outputs(model.backbone.net)
+    x0 = torch.rand((1, 3, 512, 512)).cuda()
+    x1 = model.backbone.net(x0)
+    # torch.Size([1, 768, 16, 16])
+    for (name, feat) in output_list:
+        print(name, feat.shape)
+    import ipdb; ipdb.set_trace()
+
+
     logger = logging.getLogger("detectron2")
     logger.info("Model:\n{}".format(model))
-    model.to(cfg.train.device)
+    # model.to(cfg.train.device)
 
     cfg.optimizer.params.model = model
     optim = instantiate(cfg.optimizer)
