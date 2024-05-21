@@ -69,6 +69,7 @@ class DinoViT(Backbone):
         num_register_tokens=0,
         interpolate_antialias=False,
         interpolate_offset=0.1,
+        out_feature="last_feat",
     ):
         """
         Args:
@@ -172,6 +173,11 @@ class DinoViT(Backbone):
         self.mask_token = nn.Parameter(torch.zeros(1, embed_dim))
 
         self.init_weights()
+        self._out_feature_channels = {out_feature: embed_dim}
+        self._out_feature_strides = {out_feature: patch_size}
+        self._out_features = [out_feature]
+
+
 
     def init_weights(self):
         trunc_normal_(self.pos_embed, std=0.02)
