@@ -9,7 +9,7 @@ from detectron2.modeling.backbone.vit import get_vit_lr_decay_rate
 from ..common.coco_loader_ssl import dataloader
 
 
-model = model_zoo.get_config("common/models/mask_rcnn_vitdet.py").model
+model = model_zoo.get_config("common/models/fast_rcnn_vitdet.py").model
 
 # Initialization and trainer settings
 train = model_zoo.get_config("common/train.py").train
@@ -19,7 +19,7 @@ train.init_checkpoint = (
     "detectron2://ImageNetPretrained/MAE/mae_pretrain_vit_base.pth?matching_heuristics=True"
     # "/home/appuser/detectron2_repo/datasets/coco/dinov2_vitb14_reg4_pretrain.pth"
 )
-train.output_dir = '/home/appuser/datasets/ssl/train_output/test'
+train.output_dir = '/home/appuser/datasets/tiip/train-output/test'
 
 
 # Schedule

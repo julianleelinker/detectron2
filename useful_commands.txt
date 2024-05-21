@@ -5,6 +5,6 @@ pip3 install --user -e detectron2
 pip3 install --user timm
 pip3 install --user shapely
 
-export DETECTRON2_DATASETS=/home/appuser/datasets/ssl
+export DETECTRON2_DATASETS=/home/appuser/datasets/<data-root>
 set PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:128
 ../../tools/lazyconfig_train_net.py --config-file configs/COCO/mask_rcnn_vitdet_b_100ep_ssl.py
