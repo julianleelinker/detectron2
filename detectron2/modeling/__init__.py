@@ -16,6 +16,7 @@ from .backbone import (
     get_vit_lr_decay_rate,
     MViT,
     SwinTransformer,
+    DinoViT,
 )
 from .meta_arch import (
     META_ARCH_REGISTRY,
