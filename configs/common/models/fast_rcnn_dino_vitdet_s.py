@@ -13,7 +13,11 @@ model.pixel_std = constants.imagenet_rgb256_std
 model.input_format = "RGB"
 
 # Base
-embed_dim, depth, num_heads, dp = 768, 12, 12, 0.1
+#embed_dim, depth, num_heads, dp = 768, 12, 12, 0.1
+
+# Small 
+embed_dim, depth, num_heads, dp = 384, 12, 6, 0.1
+
 # Creates Simple Feature Pyramid from ViT backbone
 model.backbone = L(SimpleFeaturePyramid)(
     net=L(DinoViT)(  # Single-scale ViT backbone
