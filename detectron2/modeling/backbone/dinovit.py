@@ -108,7 +108,8 @@ class DinoViT(Backbone):
         self.interpolate_antialias = interpolate_antialias
         self.interpolate_offset = interpolate_offset
 
-        self.patch_embed = embed_layer(img_size=img_size, patch_size=patch_size, in_chans=in_chans, embed_dim=embed_dim)
+        self.patch_embed = embed_layer(img_size=img_size, patch_size=patch_size, in_chans=in_chans, embed_dim=embed_dim, flatten_embedding=True)
+        self.patch_grid_h, self.patch_grid_w = self.patch_embed.patches_resolution
         num_patches = self.patch_embed.num_patches
 
         self.cls_token = nn.Parameter(torch.zeros(1, 1, embed_dim))
@@ -333,10 +334,14 @@ class DinoViT(Backbone):
 
     def forward(self, *args, is_training=False, **kwargs):
         ret = self.forward_features(*args, **kwargs)
-        if is_training:
-            return ret
-        else:
-            return self.head(ret["x_norm_clstoken"])
+        feature = ret['x_prenorm'][:, 1:, :]
+        feature = feature.reshape(-1, self.patch_grid_h, self.patch_grid_w, self.embed_dim)
+        return {self._out_features[0]: feature.permute(0, 3, 1, 2)}
+        # return ret['x_prenorm']
+        # if is_training:
+        #     return ret
+        # else:
+        #     return self.head(ret["x_norm_clstoken"])
 
 
 def init_weights_vit_timm(module: nn.Module, name: str = ""):
