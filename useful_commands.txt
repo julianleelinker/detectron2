@@ -10,3 +10,17 @@ export DETECTRON2_DATASETS=/home/appuser/datasets/tiip/tiip-coco-scratch-s_10_13
 #export DETECTRON2_DATASETS=/home/appuser/datasets/<data-root>
 set PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:128
 ../../tools/lazyconfig_tiip_train_net.py --config-file configs/COCO/mask_rcnn_vitdet_b_100ep_ssl.py
+
+
+    # def _rename_dino_state_dict_keys(self, checkpoint) -> None:
+    #     # backbone.net.patch_embed.proj.{bias, weight}
+    #     # patch_embed.proj.bias
+    #     # patch_embed.proj.weight
+    #     new_state_dict = {}
+    #     for k in checkpoint['model']:
+    #         new_k = k
+    #         if 'blocks' in k:
+    #             new_k = k.replace('blocks', 'blocks.0')
+    #         new_state_dict[f'backbone.net.{new_k}'] = checkpoint['model'][k] 
+    #     checkpoint['model'] = new_state_dict
+    #     import ipdb; ipdb.set_trace()

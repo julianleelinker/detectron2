@@ -71,21 +71,10 @@ def do_train(args, cfg):
                 ddp (dict)
     """
     model = instantiate(cfg.model)
-    model.to(cfg.train.device)
-
-
-    output_list = custom.register_top_outputs(model.backbone.net)
-    x0 = torch.rand((1, 3, 512, 512)).cuda()
-    x1 = model.backbone.net(x0)
-    # torch.Size([1, 768, 16, 16])
-    for (name, feat) in output_list:
-        print(name, feat.shape)
-    import ipdb; ipdb.set_trace()
-
 
     logger = logging.getLogger("detectron2")
     logger.info("Model:\n{}".format(model))
-    # model.to(cfg.train.device)
+    model.to(cfg.train.device)
 
     cfg.optimizer.params.model = model
     optim = instantiate(cfg.optimizer)
