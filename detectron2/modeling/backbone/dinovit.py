@@ -168,7 +168,7 @@ class DinoViT(Backbone):
             self.chunked_blocks = False
             self.blocks = nn.ModuleList(blocks_list)
 
-        self.norm = norm_layer(embed_dim)
+        # self.norm = norm_layer(embed_dim)
         self.head = nn.Identity()
 
         self.mask_token = nn.Parameter(torch.zeros(1, embed_dim))
@@ -225,7 +225,8 @@ class DinoViT(Backbone):
         B, nc, w, h = x.shape
         x = self.patch_embed(x)
         if masks is not None:
-            x = torch.where(masks.unsqueeze(-1), self.mask_token.to(x.dtype).unsqueeze(0), x)
+            mask_token = nn.Parameter(torch.zeros(1, self.embed_dim))
+            x = torch.where(masks.unsqueeze(-1), mask_token.to(x.dtype).unsqueeze(0), x)
 
         x = torch.cat((self.cls_token.expand(x.shape[0], -1, -1), x), dim=1)
         x = x + self.interpolate_pos_encoding(x, w, h)
@@ -271,14 +272,15 @@ class DinoViT(Backbone):
         for blk in self.blocks:
             x = blk(x)
 
-        x_norm = self.norm(x)
-        return {
-            "x_norm_clstoken": x_norm[:, 0],
-            "x_norm_regtokens": x_norm[:, 1 : self.num_register_tokens + 1],
-            "x_norm_patchtokens": x_norm[:, self.num_register_tokens + 1 :],
-            "x_prenorm": x,
-            "masks": masks,
-        }
+        # x_norm = self.norm(x)
+        # return {
+        #     "x_norm_clstoken": x_norm[:, 0],
+        #     "x_norm_regtokens": x_norm[:, 1 : self.num_register_tokens + 1],
+        #     "x_norm_patchtokens": x_norm[:, self.num_register_tokens + 1 :],
+        #     "x_prenorm": x,
+        #     "masks": masks,
+        # }
+        return x
 
     def _get_intermediate_layers_not_chunked(self, x, n=1):
         x = self.prepare_tokens_with_masks(x)
@@ -334,7 +336,7 @@ class DinoViT(Backbone):
 
     def forward(self, *args, is_training=False, **kwargs):
         ret = self.forward_features(*args, **kwargs)
-        feature = ret['x_prenorm'][:, 1:, :]
+        feature = ret[:, 1:, :] # remove the cls token
         feature = feature.reshape(-1, self.patch_grid_h, self.patch_grid_w, self.embed_dim)
         return {self._out_features[0]: feature.permute(0, 3, 1, 2)}
         # return ret['x_prenorm']
