@@ -4,7 +4,9 @@ docker run --gpus all -it \
 pip3 install --user -e detectron2
 pip3 install --user timm
 pip3 install --user shapely
+pip3 install --user ipdb
 
-export DETECTRON2_DATASETS=/home/appuser/datasets/<data-root>
+export DETECTRON2_DATASETS=/home/appuser/datasets/tiip/tiip-coco-scratch-s_10_13_14_15
+#export DETECTRON2_DATASETS=/home/appuser/datasets/<data-root>
 set PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:128
-../../tools/lazyconfig_train_net.py --config-file configs/COCO/mask_rcnn_vitdet_b_100ep_ssl.py
+../../tools/lazyconfig_tiip_train_net.py --config-file configs/COCO/mask_rcnn_vitdet_b_100ep_ssl.py
