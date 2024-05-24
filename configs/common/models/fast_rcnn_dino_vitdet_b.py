@@ -33,7 +33,7 @@ model.backbone = L(SimpleFeaturePyramid)(
         # proj_bias=True,
         drop_path_rate=0.0,
         drop_path_uniform=False,
-        init_values=None,  # for layerscale: None or 0 => no layerscale
+        init_values=1.0,  # for layerscale: None or 0 => no layerscale
         #embed_layer=PatchEmbed,
         act_layer=nn.GELU,
         #block_fn=Block,
