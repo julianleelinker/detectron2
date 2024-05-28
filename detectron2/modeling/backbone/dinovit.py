@@ -70,6 +70,7 @@ class DinoViT(Backbone):
         interpolate_antialias=False,
         interpolate_offset=0.1,
         out_feature="last_feat",
+        square_pad=0,
     ):
         """
         Args:
@@ -177,8 +178,8 @@ class DinoViT(Backbone):
         self._out_feature_channels = {out_feature: embed_dim}
         self._out_feature_strides = {out_feature: patch_size}
         self._out_features = [out_feature]
-
-
+        self._size_divisibility = patch_size
+        self._square_pad = square_pad
 
     def init_weights(self):
         trunc_normal_(self.pos_embed, std=0.02)
@@ -344,6 +345,14 @@ class DinoViT(Backbone):
         #     return ret
         # else:
         #     return self.head(ret["x_norm_clstoken"])
+    
+    @property
+    def padding_constraints(self):
+        return {
+            "size_divisiblity": self._size_divisibility,
+            "square_size": self._square_pad,
+        }
+
 
 
 def init_weights_vit_timm(module: nn.Module, name: str = ""):
