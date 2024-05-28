@@ -111,6 +111,7 @@ def do_train(args, cfg):
     )
 
     checkpointer.resume_or_load(cfg.train.init_checkpoint, resume=args.resume)
+    model.backbone.requires_grad_(False)
     if args.resume and checkpointer.has_checkpoint():
         # The checkpoint stores the training iteration that just finished, thus we start
         # at the next iteration
