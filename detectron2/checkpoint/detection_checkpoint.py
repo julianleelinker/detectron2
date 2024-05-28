@@ -20,7 +20,7 @@ class DetectionCheckpointer(Checkpointer):
     2. correctly load checkpoints that are only available on the master worker
     """
 
-    def __init__(self, model, save_dir="", *, save_to_disk=None, **checkpointables):
+    def __init__(self, model, save_dir="", *, save_to_disk=None, replace_dino_prefix=False, **checkpointables):
         is_main_process = comm.is_main_process()
         super().__init__(
             model,
@@ -30,6 +30,7 @@ class DetectionCheckpointer(Checkpointer):
         )
         self.path_manager = PathManager
         self._parsed_url_during_load = None
+        self.replace_dino_prefix = replace_dino_prefix
 
     def load(self, path, *args, **kwargs):
         assert self._parsed_url_during_load is None
@@ -123,6 +124,10 @@ class DetectionCheckpointer(Checkpointer):
                 c2_conversion=checkpoint.get("__author__", None) == "Caffe2",
             )
         # for non-caffe2 models, use standard ways to load it
+        # import ipdb; ipdb.set_trace()
+        if self.replace_dino_prefix:
+            self._replace_dino_state_dict_keys(checkpoint)
+
         incompatible = super()._load_model(checkpoint)
 
         model_buffers = dict(self.model.named_buffers(recurse=False))
@@ -141,3 +146,24 @@ class DetectionCheckpointer(Checkpointer):
             if "anchor_generator.cell_anchors" in k:
                 incompatible.unexpected_keys.remove(k)
         return incompatible
+
+    def _replace_dino_state_dict_keys(self, checkpoint) -> None:
+        # backbone.net.patch_embed.proj.{bias, weight}
+        # patch_embed.proj.bias
+        # patch_embed.proj.weight
+        new_state_dict = {}
+        for k in checkpoint['model']:
+            new_k = k
+            if 'blocks' in k:
+                new_k = k.replace('blocks', 'blocks.0')
+            new_state_dict[f'backbone.{new_k}'] = checkpoint['model'][k] 
+        # import ipdb; ipdb.set_trace()
+        checkpoint['model'] = new_state_dict
+
+
+# not found
+# backbone.patch_embed.proj.weight
+# backbone.pos_embed
+# 
+# not used
+# backbone.norm.{bias, weight}
