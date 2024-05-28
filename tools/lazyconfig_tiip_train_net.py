@@ -86,6 +86,7 @@ def do_train(args, cfg):
     checkpointer = DetectionCheckpointer(
         model,
         cfg.train.output_dir,
+        replace_dino_prefix=True,
         trainer=trainer,
     )
     trainer.register_hooks(
