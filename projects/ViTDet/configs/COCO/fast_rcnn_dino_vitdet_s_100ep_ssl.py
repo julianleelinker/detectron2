@@ -8,22 +8,25 @@ from detectron2.modeling.backbone.vit import get_vit_lr_decay_rate
 
 from ..common.coco_loader_ssl import dataloader
 
-dataloader.train.total_batch_size = 4
+dataloader.train.total_batch_size = 32
+dataloader.train.num_workers = 16
+dataloader.test.num_workers = 16
 
-model = model_zoo.get_config("common/models/fast_rcnn_dino_vitdet_b.py").model
-model.backbone.net.embed_dim = 384
-model.backbone.net.depth = 12
-model.backbone.net.num_heads = 6
-model.backbone.net.patch_size = 16
+# model = model_zoo.get_config("common/models/fast_rcnn_dino_vitdet_b.py").model
+model = model_zoo.get_config("common/models/faster_rcnn_dino.py").model
+# model.backbone.net.embed_dim = 384
+# model.backbone.net.depth = 12
+# model.backbone.net.num_heads = 6
+# model.backbone.net.patch_size = 16
 
 # Initialization and trainer settings
 train = model_zoo.get_config("common/train.py").train
 train.amp.enabled = True
 train.ddp.fp16_compression = True
 train.init_checkpoint = (
-    "detectron2://ImageNetPretrained/MAE/mae_pretrain_vit_base.pth?matching_heuristics=True"
+    # "detectron2://ImageNetPretrained/MAE/mae_pretrain_vit_base.pth?matching_heuristics=True"
     # "/home/appuser/detectron2_repo/datasets/coco/dinov2_vitb14_reg4_pretrain.pth"
-    # "/home/appuser/detectron2/model-weights/dinov2_vits14_pretrain.pth"
+    "/home/appuser/detectron2/model-weights/dinov2_vits14_pretrain.pth"
 )
 train.output_dir = '/home/appuser/datasets/tiip/train-output/test'
 train.ddp.find_unused_parameters = True
@@ -38,7 +41,8 @@ train.eval_period = num_train_images // dataloader.train.total_batch_size
 lr_multiplier = L(WarmupParamScheduler)(
     scheduler=L(MultiStepParamScheduler)(
         values=[1.0, 0.1, 0.01],
-        milestones=[163889, 177546],
+        # milestones=[163889, 177546],
+        milestones=[int(0.8*train.max_iter), int(0.9*train.max_iter)],
         num_updates=train.max_iter,
     ),
     warmup_length=250 / train.max_iter,
