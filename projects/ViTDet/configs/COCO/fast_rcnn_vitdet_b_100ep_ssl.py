@@ -9,6 +9,10 @@ from detectron2.modeling.backbone.vit import get_vit_lr_decay_rate
 from ..common.coco_loader_ssl import dataloader
 
 
+dataloader.train.total_batch_size = 4
+dataloader.train.num_workers = 16
+dataloader.test.num_workers = 16
+
 model = model_zoo.get_config("common/models/fast_rcnn_vitdet.py").model
 
 # Initialization and trainer settings
@@ -19,17 +23,21 @@ train.init_checkpoint = (
     "detectron2://ImageNetPretrained/MAE/mae_pretrain_vit_base.pth?matching_heuristics=True"
     # "/home/appuser/detectron2_repo/datasets/coco/dinov2_vitb14_reg4_pretrain.pth"
 )
-train.output_dir = '/home/appuser/datasets/tiip/train-output/test'
+train.output_dir = '/home/appuser/datasets/tiip/train-output/test0704'
 
 
 # Schedule
 # 100 ep = 184375 iters * 64 images/iter / 118000 images/ep
-train.max_iter = 184375
+# train.max_iter = 184375
+
+n_train = 10209
+n_epoch = 100
+train.max_iter = int(n_epoch * n_train // dataloader.train.total_batch_size)
 
 lr_multiplier = L(WarmupParamScheduler)(
     scheduler=L(MultiStepParamScheduler)(
         values=[1.0, 0.1, 0.01],
-        milestones=[163889, 177546],
+        milestones=[int(0.8*train.max_iter), int(0.9*train.max_iter)],
         num_updates=train.max_iter,
     ),
     warmup_length=250 / train.max_iter,

@@ -10,14 +10,16 @@ from ..data.constants import constants
 model.pixel_mean = constants.imagenet_rgb256_mean
 model.pixel_std = constants.imagenet_rgb256_std
 model.input_format = "RGB"
+img_size = 14*64
+
 
 # Base
 embed_dim, depth, num_heads, dp = 768, 12, 12, 0.1
 # Creates Simple Feature Pyramid from ViT backbone
 model.backbone = L(SimpleFeaturePyramid)(
     net=L(ViT)(  # Single-scale ViT backbone
-        img_size=1024,
-        patch_size=16,
+        img_size=img_size,
+        patch_size=14,
         embed_dim=embed_dim,
         depth=depth,
         num_heads=num_heads,
