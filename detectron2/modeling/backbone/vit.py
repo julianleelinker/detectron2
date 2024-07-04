@@ -401,7 +401,9 @@ class SimpleFeaturePyramid(Backbone):
         self.scale_factors = scale_factors
 
         input_shapes = net.output_shape()
-        strides = [int(input_shapes[in_feature].stride / scale) for scale in scale_factors]
+        strides = [int(16 / scale) for scale in scale_factors]
+        # strides = [int(input_shapes[in_feature].stride / scale) for scale in scale_factors]
+        # import ipdb; ipdb.set_trace()
         _assert_strides_are_log2_contiguous(strides)
 
         dim = input_shapes[in_feature].channels
@@ -486,6 +488,7 @@ class SimpleFeaturePyramid(Backbone):
                 convention: "p<stage>", where stage has stride = 2 ** stage e.g.,
                 ["p2", "p3", ..., "p6"].
         """
+        # import ipdb; ipdb.set_trace()
         bottom_up_features = self.net(x)
         features = bottom_up_features[self.in_feature]
         results = []
